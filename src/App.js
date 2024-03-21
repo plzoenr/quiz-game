@@ -2,18 +2,11 @@ import './App.css';
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import parse from 'html-react-parser';
-// import QuizOption from "./QuizOption";
+import QuizOption from "./QuizOption";
 import { useNavigate } from 'react-router-dom';
-import shuffle from 'lodash.shuffle';
-
-interface QuizItem {
-  question: string;
-  correct_answer: string;
-  incorrect_answers: string[];
-}
-const App: React.FC = () => {
-  const [quiz, setQuiz] = useState<QuizItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+function App() {
+  const [quiz, setQuiz] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [shuffledChoices, setShuffledChoices] = useState([]);
   const navigate = useNavigate();
@@ -37,9 +30,9 @@ const App: React.FC = () => {
     }
   }, [quiz]);
 
-  const shuffleChoices = (quizData: QuizItem[]): void => {
-    const shuffled: string[][] = quizData.map((quizItem) => {
-      const choices: string[] = [quizItem.correct_answer, ...quizItem.incorrect_answers];
+  const shuffleChoices = (quizData) => {
+    const shuffled = quizData.map((quizItem) => {
+      const choices = [quizItem.correct_answer, ...quizItem.incorrect_answers];
       return shuffle(choices);
     });
     setShuffledChoices(shuffled);
@@ -122,13 +115,13 @@ const App: React.FC = () => {
                 </div>
                 <div className="answer">
                   {shuffledChoices.length > 0 && shuffledChoices[main_index].map((choice, index) => (
-                    // <QuizOption
-                    //   key={index}
-                    //   name={`option_${main_index}_${index}`}
-                    //   value={choice}
-                    //   onChange={() => handleAnswerSelection(`option_${main_index}_${index}`, choice === quizItem.correct_answer ? 'correct' : 'incorrect', choice, main_index)}
-                    //   label={parse(choice)}
-                    // />
+                    <QuizOption
+                      key={index}
+                      name={`option_${main_index}_${index}`}
+                      value={choice}
+                      onChange={() => handleAnswerSelection(`option_${main_index}_${index}`, choice === quizItem.correct_answer ? 'correct' : 'incorrect', choice, main_index)}
+                      label={parse(choice)}
+                    />
                   ))}
                 </div>
               </div>
