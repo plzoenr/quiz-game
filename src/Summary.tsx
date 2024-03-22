@@ -1,9 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function Summary() {
-  const score = localStorage.getItem("quiz_score")
-  const mockUpLeaderBoard = [{
+interface LeaderBoard {
+  userName: string;
+  score: number;
+}
+
+const Summary: React.FC = () => {
+  const scoreString: string | null = localStorage.getItem("quiz_score");
+  const score: number | 0 = scoreString ? parseInt(scoreString) : 0;
+  const mockUpLeaderBoard: LeaderBoard[] = [{
     userName: "Alex Sis",
     score: 17
   }, {

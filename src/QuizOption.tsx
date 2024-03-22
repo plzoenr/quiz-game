@@ -1,6 +1,13 @@
 import React from 'react';
 
-const QuizOption = ({ key, name, value, onChange, label }) => {
+interface QuizOptionProps {
+    name: string;
+    value: string;
+    onChange: () => void;
+    label: React.JSX.Element;
+    key: string
+}
+const QuizOption: React.FC<QuizOptionProps> = ({ name, value, onChange, label, key}) => {
   return (
     <div className="radio">
       <label>
